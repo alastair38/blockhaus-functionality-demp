@@ -1,0 +1,90 @@
+{
+    "key": "group_6564a44b08b33",
+    "title": "SEO + Branding",
+    "fields": [
+        {
+            "key": "field_6564a44bd6004",
+            "label": "Social sharing image",
+            "name": "social_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_6564b5f0dd067",
+            "label": "German site description",
+            "name": "german_site_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "A description of the website (in German) to be used for search engine optimisation on German language archive pages. The description should be around 170 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 170,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_6564b68a3acad",
+            "label": "French site description",
+            "name": "french_site_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "A description of the website (in French) to be used for search engine optimisation on French language archive pages. The description should be around 170 characters.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 170,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "site-settings"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1701099341
+}

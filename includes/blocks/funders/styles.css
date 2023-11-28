@@ -1,0 +1,24 @@
+ul.funders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  padding: 3rem 0;
+  margin: 0 auto;
+  gap: 1.5rem;
+}
+
+.funders li {
+  justify-self: center;
+}
+
+.funders li a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.funders li img {
+  object-fit: contain;
+}

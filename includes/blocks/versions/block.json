@@ -1,0 +1,31 @@
+{
+  "name": "blockhaus/versions",
+  "title": "Display other language versions",
+  "description": "Display other language versions of this content",
+  "style": ["file:./styles.css"],
+  "script": "",
+
+  "icon": "translation",
+  "apiVersion": 2,
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php"
+  },
+  "styles": [],
+  "supports": {
+    "align": false,
+    "anchor": false,
+    "alignContent": false,
+    "customClassName": false,
+    "color": {
+      "text": false,
+      "background": false,
+      "link": false
+    },
+    "alignText": false,
+    "fullHeight": false,
+    "inserter": true
+  },
+  "attributes": {}
+}
