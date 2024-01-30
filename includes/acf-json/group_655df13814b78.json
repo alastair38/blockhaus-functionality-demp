@@ -1,6 +1,6 @@
 {
     "key": "group_655df13814b78",
-    "title": "Assign Language Versions",
+    "title": "Language Versions",
     "fields": [
         {
             "key": "field_655df138961e8",
@@ -8,12 +8,12 @@
             "name": "language_versions",
             "aria-label": "",
             "type": "relationship",
-            "instructions": "Choose other language versions of this content from the list of content to the right. Content is organised by type and you can also use the 'Select post type' filter to only show a particular type. When you click on a list item it will be selected and added to right-hand panel.",
+            "instructions": "Choose other language versions of this content from the list of content to the left. Content is organised by type and you can also use the 'Select post type' filter to only show a particular type. When you click on a list item it will be selected and added to right-hand panel.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "",
+                "class": "lang-versions",
                 "id": ""
             },
             "post_type": [
@@ -71,5 +71,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1700839678
+    "modified": 1701256810
 }

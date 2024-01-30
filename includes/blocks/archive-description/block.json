@@ -1,11 +1,11 @@
 {
-  "name": "blockhaus/funders",
-  "title": "Displays funders details",
-  "description": "Display funders details",
+  "name": "blockhaus/archive-description",
+  "title": "Archive description",
+  "description": "Displays the description from the site settings page",
   "style": ["file:./styles.css"],
   "script": "",
 
-  "icon": "groups",
+  "icon": "editor-alignleft",
   "apiVersion": 2,
   "keywords": [],
   "acf": {

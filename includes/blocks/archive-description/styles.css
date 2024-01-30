@@ -1,0 +1,22 @@
+.blockhaus-archive-description {
+  text-align: center;
+  /* text-wrap: balance; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wp--preset--spacing--30);
+}
+
+.blockhaus-archive-description svg {
+  height: 2rem;
+}
+
+.blockhaus-archive-description p {
+  margin-block: 0;
+}
+
+.blockhaus-archive-description hr {
+  width: var(--wp--preset--spacing--60);
+  border-color: var(--wp--preset--color--accent-2);
+}

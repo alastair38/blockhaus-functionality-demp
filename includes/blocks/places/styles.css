@@ -1,0 +1,30 @@
+.blockhaus-places,
+.placeholder {
+  font-size: var(--wp--preset--font-size--small);
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--5);
+}
+
+.blockhaus-places span {
+  display: flex;
+  gap: var(--wp--preset--spacing--5);
+}
+
+.blockhaus-places:not([data-count='1']) > a:not(:last-of-type)::after {
+  content: ',';
+}
+
+/* @media (min-width: 768px) {
+  .single-post .blockhaus-places span:has(> svg) {
+    background: var(--wp--preset--color--accent-2);
+    color: var(--wp--preset--color--contrast);
+    padding: var(--wp--preset--spacing--5);
+    border-radius: 50%;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+} */

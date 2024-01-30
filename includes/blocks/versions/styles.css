@@ -1,18 +1,40 @@
-ul.language-versions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 1fr);
+div.language-versions span {
+  display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+div.language-versions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--5);
+  font-size: calc(var(--wp--preset--font-size--small) * 0.9);
+}
+
+.archive div.language-versions {
+  background: whitesmoke;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+ul.language-versions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   list-style-type: none;
-  padding: 0.5rem 0 0.5rem 0.5rem;
-  margin: 0 auto;
-  gap: 0.5rem;
-  font-size: 0.85rem;
+  padding: 0;
+  margin: 0;
+  gap: 0.75rem;
+}
+
+.language-versions li {
+  width: fit-content;
+  display: flex;
 }
 
 .language-versions li a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  background: white;
   gap: 0.25rem;
   padding: 0 0.35rem;
   border: 1px solid #d4d4d4;
@@ -30,20 +52,23 @@ ul.language-versions {
   scale: 0.75;
 }
 
-ul.language-versions li:has(svg.fr) {
+/* ul.language-versions li:has(svg.fr) {
   grid-column: 3/4;
+
   grid-row: 1;
 }
 
 ul.language-versions li:has(svg.de) {
   grid-column: 2/3;
+
   grid-row: 1;
 }
 
 ul.language-versions li:has(svg.gb) {
   grid-column: 1/2;
+
   grid-row: 1;
-}
+} */
 
 .en_GB a.gb {
   outline-color: #999;

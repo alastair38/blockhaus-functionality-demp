@@ -2,7 +2,8 @@
 /*
 Plugin name: Blockhaus Base Functionality
 Description: Custom fields and Gutenberg blocks
-Text Domain: blockhaus
+Text Domain: core-functionality
+Domain Path: /languages/
 */
 
 // Define path and URL to the ACF plugin.
@@ -80,12 +81,38 @@ add_filter( 'image_size_names_choose', 'blockhaus_image_names' );
  * Load Custom Blocks
  */
 function blockhaus_load_blocks() {
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/archive-description/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/author/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/date/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/files/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/funders/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/type/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/versions/block.json' );
 }
 add_action( 'init', 'blockhaus_load_blocks' );
 
+/* Update post labels */
 
+add_action( 'init', 'blockhaus_change_post_object' );
+// Change dashboard Posts to Articles
+function blockhaus_change_post_object() {
+    $get_post_type = get_post_type_object('post');
+    $labels = $get_post_type->labels;
+        $labels->name = 'Articles';
+        $labels->singular_name = 'Article';
+        $labels->add_new = 'Add Article';
+        $labels->add_new_item = 'Add Article';
+        $labels->edit_item = 'Edit Article';
+        $labels->new_item = 'Article';
+        $labels->view_item = 'View Article';
+        $labels->search_items = 'Search Articles';
+        $labels->not_found = 'No Articles found';
+        $labels->not_found_in_trash = 'No Articles found in Trash';
+        $labels->all_items = 'All Articles';
+        $labels->menu_name = 'Articles';
+        $labels->name_admin_bar = 'Articles';
+}
 
 function blockhaus_metatags() {
 	
@@ -128,12 +155,12 @@ function blockhaus_metatags() {
 			
 			}
 			
-			if ( is_singular('resources-de') || is_singular('blog-de')):
+			if ( is_singular('resources-de') || is_singular('blog-de') || is_singular('place-de')):
 		
 				$locale = 'de';
 	
 	
-			elseif ( is_singular('resources-fr') || is_singular('blog-fr')):
+			elseif ( is_singular('resources-fr') || is_singular('blog-fr') || is_singular('place-fr')):
 				
 				$locale = 'fr';
 				
@@ -172,9 +199,11 @@ function blockhaus_metatags() {
 
 		elseif(is_archive() && ! is_search()):
 
-			$permalink = get_post_type_archive_link($post->post_type);
+			$queried_object = get_queried_object();
+			//var_dump($queried_object);
+			$permalink = get_post_type_archive_link($queried_object->name);
 			
-			if ( is_post_type_archive('blog-de') || is_post_type_archive('resources-de') ):
+			if ( is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
 				
 				$title = get_the_archive_title();
 				
@@ -184,11 +213,13 @@ function blockhaus_metatags() {
 	
 				endif;
 				
+				//we don't use get_locale() here as even though the setLangAttr function is setting this correctly, WP uses a different format from HTML for its codes eg: en_GB rather than en-GB
+				
 				$locale = 'de';
 	
-			elseif ( is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') ):
+			elseif ( is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') || is_post_type_archive('place-fr') ):
 				
-				$title = get_the_archive_title();
+				$title = post_type_archive_title( '', false );
 				
 				if(function_exists('get_field')):
 			
@@ -206,7 +237,7 @@ function blockhaus_metatags() {
 				
 			else: 
 				
-				$title = get_the_archive_title();
+				$title = post_type_archive_title( '', false );
 				$excerpt = get_bloginfo('description');
 				$locale = 'en';
 					
@@ -226,35 +257,7 @@ function blockhaus_metatags() {
 			$title = get_bloginfo('title');
 			$excerpt = get_bloginfo('description');
 
-		endif;
-	
-	
-		/* set the $locale depending on page type */
-	
-		// if ( is_singular('resources-de') || is_singular('blog-de') || is_post_type_archive('blog-de') || is_post_type_archive('resources-de') ):
-		
-		// 	$locale = 'de';
-
-
-		// elseif ( is_singular('resources-fr') || is_singular('blog-fr')  || is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') ):
-			
-		// 	$locale = 'fr';
-			
-		// else: 
-			
-		// 	$lang = get_the_terms( get_the_ID(), 'language' );
-			
-		// 	if ($lang):
-			
-		// 		$locale = $lang[0]->slug;
-				
-		// 	else:
-				
-		// 		$locale = 'en';
-				
-		// 	endif;
-		
-		// endif;?>
+		endif;?>
 	
 	<!-- output metatags -->
 		<?php if($author_name):?>
@@ -283,31 +286,37 @@ add_action( 'wp_head', 'blockhaus_metatags',2);
 
 function setLangAttr() {
 	
-	if ( is_singular('resources-de') || is_singular('blog-de') || is_post_type_archive('blog-de') || is_post_type_archive('resources-de') ):
+	if ( is_singular('resources-de') || is_singular('blog-de') || is_singular('place-de') || is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
 	
-    return 'lang="de"';
+	 switch_to_locale('de_DE');
+   return 'lang="de"';
 
-	elseif ( is_singular('resources-fr') || is_singular('blog-fr')  || is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') ):
+	elseif ( is_singular('resources-fr') || is_singular('blog-fr') || is_singular('place-fr') || is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') || is_post_type_archive('place-fr') ):
 		
-		/* open graph tags in FR */
-    return 'lang="fr"';
+		switch_to_locale('fr_FR');
+		return 'lang="fr"';
 	
-	elseif ( is_page() || is_single() ):
+	elseif ( is_page()  ):
 		
 		$lang = get_the_terms( get_the_ID(), 'language' );
 		
 		if ($lang):
 		
+		$locale = $lang[0]->slug . '_' . strtoupper($lang[0]->slug); 
 		/* open graph tags in lang */
-    return 'lang="' . $lang[0]->slug . '"';
+		switch_to_locale($locale);
+		return 'lang="' . $lang[0]->slug . '"';
+  
 		endif;
 		
 	elseif ( is_singular('post') || is_singular('resources') || is_post_type_archive('resources') || is_post_type_archive('post') ):
 		
+		switch_to_locale('en_GB');
 		return 'lang="en"';
 		
 	else: 
 		
+		switch_to_locale('en_GB');
 		return 'lang="en"';
 		
 	endif;
@@ -365,6 +374,15 @@ if ( ! function_exists( 'hreflang_blockhaus' ) ) {
 			
 		<?php endif;
 		
+		if(is_post_type_archive('place') || is_post_type_archive('place-de') || is_post_type_archive('place-fr')):?>
+			
+			<link rel="alternate" href="<?php echo get_post_type_archive_link( 'place' ); ?>" hreflang="x-default">
+			<link rel="alternate" href="<?php echo get_post_type_archive_link( 'place' ); ?>" hreflang="en">
+			<link rel="alternate" href="<?php echo get_post_type_archive_link( 'place-fr' ); ?>" hreflang="fr">
+			<link rel="alternate" href="<?php echo get_post_type_archive_link( 'place-de' ); ?>" hreflang="de">
+			
+		<?php endif;
+		
 		if(is_home() || is_post_type_archive('blog-de') || is_post_type_archive('blog-fr')):?>
 			
 			<link rel="alternate" href="<?php echo get_post_type_archive_link( 'post' ); ?>" hreflang="x-default">
@@ -376,6 +394,50 @@ if ( ! function_exists( 'hreflang_blockhaus' ) ) {
 	}
 }
 add_action( 'wp_head', 'hreflang_blockhaus' );
+
+
+function blockhaus_locale_date_formatter($post_id) {
+
+	//use $post_id passed in from the registered block context to get the post type which we then use to switch the locale to allow us to use the built-in wp_date() function for outputting localized dates
+	
+	$type = get_post_type($post_id);
+	
+	if($type === 'resources-de' || $type === 'blog-de' || $type === 'place-de'):
+	
+	switch_to_locale( 'de_DE' );
+  $locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+		
+	elseif($type === 'resources-fr' || $type === 'blog-fr' || $type === 'place-fr'):
+	
+	switch_to_locale( 'fr_FR' );
+  $locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+	
+	else:
+		
+	$locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+
+	endif;
+
+	// $fmt = new IntlDateFormatter(
+	// 		$locale,
+	// 		IntlDateFormatter::FULL,
+	// 		IntlDateFormatter::FULL,
+	// 		'Europe/London',
+	// 		IntlDateFormatter::GREGORIAN,
+	// 		'd MMMM yyyy'
+	// );
+	
+	if($locale_date):
+
+	return '<time class="translated-date" datetime="' . get_the_time('c') . '"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>' . $locale_date . '</time>';
+	
+	else:
+		
+	return '<small>Localized Post Date</small>';
+	
+	endif;
+	
+}
 
 
 /**
@@ -455,7 +517,7 @@ function rd_duplicate_post_as_draft(){
 			'post_parent'    => $post->post_parent,
 			'post_password'  => $post->post_password,
 			'post_status'    => 'draft',
-			'post_title'     => $post->post_title,
+			'post_title'     => $post->post_title  . ' [DUPLICATE TO TRANSLATE]',
 			'post_type'      => 'resources-fr',
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order
@@ -471,7 +533,7 @@ function rd_duplicate_post_as_draft(){
 			'post_parent'    => $post->post_parent,
 			'post_password'  => $post->post_password,
 			'post_status'    => 'draft',
-			'post_title'     => $post->post_title,
+			'post_title'     => $post->post_title . ' [DUPLICATE TO TRANSLATE]',
 			'post_type'      => 'resources-de',
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order
@@ -510,6 +572,9 @@ function rd_duplicate_post_as_draft(){
 				}
 			}
 		}
+		
+		update_field('language_versions', $post_id, $new_de_post_id);
+		update_field('language_versions', $post_id, $new_fr_post_id);
 
 		// finally, redirect to the edit post screen for the new draft
 		// wp_safe_redirect(
@@ -562,9 +627,155 @@ function rudr_duplication_admin_notice() {
     }
 }
 
+/* Enqueue admin stylesheet to  */
+
 function enqueue_admin_custom_css() {
 	wp_enqueue_style( 'admin-custom', get_stylesheet_directory_uri() . '/assets/css/admin-custom.css' );
 }
 
 
 add_action( 'admin_enqueue_scripts', 'enqueue_admin_custom_css' );
+
+// Register the columns.
+add_filter( "manage_resources_posts_columns", function ( $defaults ) {
+	
+	$defaults['versions'] = 'Versions';
+
+	return $defaults;
+} );
+
+// Handle the value for each of the new columns.
+add_action( "manage_resources_posts_custom_column", function ( $column_name, $post_id ) {
+
+	if ( $column_name == 'versions' ) {
+		// Display an ACF field
+		$versions = get_field( 'language_versions', $post_id );
+		if($versions):?>
+
+			<?php foreach($versions as $version):
+			// get the assigned language, if any, to check if content is not from a lingual resource post type
+				$lang = get_the_terms( $version->ID, 'language' );?>
+			
+					<?php if(($version->post_type === 'resources-fr') || ($lang && $lang[0]->slug === 'fr')):?>
+						
+					 <a style="padding-right: 1rem;" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+						<?php esc_html_e( 'Français [EDIT]', 'core-functionality' );?>
+					</a><br>
+					
+					<?php elseif(($version->post_type === 'resources-de') || ($lang && $lang[0]->slug === 'de')):?>
+						
+						<a style="padding-right: 1rem;" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+						<?php esc_html_e( 'Deutsch [EDIT]', 'core-functionality' );?>
+						</a><br>
+						
+					<?php else: ?>
+					 	
+					<?php endif;?>
+					
+					
+			<?php endforeach;?> 
+
+			<?php endif;
+	
+	}
+	
+}, 10, 2 );
+
+
+add_filter( "manage_resources-de_posts_columns", function ( $defaults ) {
+	
+	$defaults['versions'] = 'Versions';
+
+	return $defaults;
+} );
+
+// Handle the value for each of the new columns.
+add_action( "manage_resources-de_posts_custom_column", function ( $column_name, $post_id ) {
+
+	if ( $column_name == 'versions' ) {
+		// Display an ACF field
+		$versions = get_field( 'language_versions', $post_id );
+		if($versions):?>
+
+			<?php foreach($versions as $version):
+			// get the assigned language, if any, to check if content is not from a lingual resource post type
+				$lang = get_the_terms( $version->ID, 'language' );?>
+			 
+					<?php if(($version->post_type === 'resources-fr') || ($lang && $lang[0]->slug === 'fr')):?>
+						<a style="" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+						<?php esc_html_e( 'Français [EDIT]', 'core-functionality' );?>
+					</a><br>
+					<?php elseif(($version->post_type === 'resources-de') || ($lang && $lang[0]->slug === 'de')):?>
+							
+						
+							
+					<?php else: ?>
+						<a style="" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+					 	<?php esc_html_e( 'English [EDIT]', 'core-functionality' );?>
+					</a><br>
+					<?php endif;?>
+			
+			<?php endforeach;?> 
+
+			<?php endif;
+	
+	}
+	
+}, 10, 2 );
+
+add_filter( "manage_resources-fr_posts_columns", function ( $defaults ) {
+	
+	$defaults['versions'] = 'Versions';
+
+	return $defaults;
+} );
+
+// Handle the value for each of the new columns.
+add_action( "manage_resources-fr_posts_custom_column", function ( $column_name, $post_id ) {
+
+	if ( $column_name == 'versions' ) {
+		// Display an ACF field
+		$versions = get_field( 'language_versions', $post_id );
+		if($versions):?>
+
+			<?php foreach($versions as $version):
+			// get the assigned language, if any, to check if content is not from a lingual resource post type
+				$lang = get_the_terms( $version->ID, 'language' );?>
+			 
+					<?php if(($version->post_type === 'resources-fr') || ($lang && $lang[0]->slug === 'fr')):?>
+					
+					<?php elseif(($version->post_type === 'resources-de') || ($lang && $lang[0]->slug === 'de')):?>
+							
+						<a style="" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+						<?php esc_html_e( 'Deutsch [EDIT]', 'core-functionality' );?>
+					</a><br>	
+							
+					<?php else: ?>
+						<a style="" class="admin-versions" href="<?php echo '/wp-admin/post.php?post=' . $version->ID . '&action=edit';?>">
+					 	<?php esc_html_e( 'English [EDIT]', 'core-functionality' );?>
+					</a><br>
+					<?php endif;?>
+			
+			<?php endforeach;?> 
+
+			<?php endif;
+	
+	}
+	
+}, 10, 2 );
+
+function order_archive_by_post_type ( $query ) {
+	if ( ! is_admin() && $query->is_main_query() ) {
+		// Not a query for an admin page.
+		// It's the main query for a front end page of your site.
+
+		if ( is_tax('place') ) {
+			// It's the main query for a category archive OR adapt for custom taxonomies
+
+			// Let's change the query for category archives, orderby post type (available since WP 4.0) in ASC order ... a,b,c
+			$query->set( 'orderby', 'type' );
+   $query->set( 'order', 'ASC');
+		}
+	}
+}
+add_action( 'pre_get_posts', 'order_archive_by_post_type' );

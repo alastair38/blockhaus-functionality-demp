@@ -1,11 +1,11 @@
 {
-  "name": "blockhaus/funders",
-  "title": "Displays funders details",
-  "description": "Display funders details",
+  "name": "blockhaus/places",
+  "title": "Locations / Places list",
+  "description": "Displays locations / places assigned to content",
   "style": ["file:./styles.css"],
   "script": "",
 
-  "icon": "groups",
+  "icon": "location",
   "apiVersion": 2,
   "keywords": [],
   "acf": {

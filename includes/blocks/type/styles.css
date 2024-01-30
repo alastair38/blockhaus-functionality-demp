@@ -1,0 +1,7 @@
+.blockhaus-type-label {
+  font-size: var(--wp--preset--font-size--small);
+  text-transform: uppercase;
+  color: var(--wp--preset--color--contrast-3);
+  margin: 0;
+  font-weight: 700;
+}

@@ -1,0 +1,25 @@
+time.translated-date {
+  font-size: var(--wp--preset--font-size--small);
+  text-transform: capitalize;
+  display: flex;
+  gap: var(--wp--preset--spacing--5);
+  align-items: center;
+  line-height: 1.5;
+}
+
+time span:has(> svg) {
+  display: flex;
+  align-items: center;
+}
+
+/* @media (min-width: 768px) {
+  .single-post time span:has(> svg) {
+    background: var(--wp--preset--color--accent-2);
+    color: var(--wp--preset--color--contrast);
+    padding: var(--wp--preset--spacing--5);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+  }
+} */

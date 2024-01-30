@@ -56,7 +56,7 @@
     "rest_base": "",
     "rest_namespace": "wp\/v2",
     "rest_controller_class": "WP_REST_Posts_Controller",
-    "menu_position": "",
+    "menu_position": 26,
     "menu_icon": "dashicons-media-document",
     "rename_capabilities": false,
     "singular_capability_name": "post",
@@ -82,5 +82,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1700839656
+    "modified": 1702374390
 }

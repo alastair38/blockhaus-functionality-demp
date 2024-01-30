@@ -42,11 +42,11 @@ if( have_rows('funders', 'option') ):?>
         $logo = get_sub_field('logo');?>
        
             <li>
-                <a aria-label="<?php esc_html_e( $name . ' website', 'blockhaus' );?>" href="<?php echo esc_url($website);?>">
+                <a aria-label="<?php esc_html_e( $name . ' website', 'core-functionality' );?>" href="<?php echo esc_url($website);?>">
                 <?php 
                  //   var_dump($logo);
                     if( !empty( $logo ) ): ?>
-                        <img height="50" width="100" src="<?php echo esc_url($logo['sizes']['medium']); ?>" alt="<?php esc_html_e( $name . ' logo', 'blockhaus' );?>" />
+                        <img height="50" width="100" src="<?php echo esc_url($logo['sizes']['medium']); ?>" alt="<?php esc_html_e( $name . ' logo', 'core-functionality' );?>" />
                     <?php endif; ?>
                 </a>
             </li>
@@ -57,7 +57,9 @@ if( have_rows('funders', 'option') ):?>
  </ul>
 <?php // No value.
 else :
-    // Do something...
+    if(is_admin()):
+        echo '<small>Any funder details from the Site Settings page will show here</small>';
+    endif;
 endif;
 
 endif;?>

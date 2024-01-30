@@ -1,0 +1,25 @@
+.blockhaus-author {
+  font-size: var(--wp--preset--font-size--small);
+  text-transform: capitalize;
+  display: flex;
+  gap: var(--wp--preset--spacing--5);
+  align-items: center;
+  line-height: 1.5;
+}
+
+a.blockhaus-author > svg {
+  display: flex;
+  align-items: center;
+}
+
+/* @media (min-width: 768px) {
+  .single-post .blockhaus-author span:has(> svg) {
+    background: var(--wp--preset--color--accent-2);
+    color: var(--wp--preset--color--contrast);
+    padding: var(--wp--preset--spacing--5);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+  }
+} */
