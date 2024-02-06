@@ -1,0 +1,14 @@
+.wp-block-blockhaus-comment-number {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  font-size: var(--wp--preset--font-size--small);
+}
+
+.wp-block-blockhaus-comment-number svg {
+  background: var(--wp--preset--color--accent-2);
+  padding: 0.25em;
+  border-radius: 50%;
+}

@@ -83,6 +83,7 @@ add_filter( 'image_size_names_choose', 'blockhaus_image_names' );
 function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/archive-description/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/author/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/comment-number/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/date/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/files/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/funders/block.json' );

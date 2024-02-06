@@ -49,8 +49,8 @@
         "delete_terms": "manage_categories",
         "assign_terms": "edit_posts"
     },
-    "public": 1,
-    "publicly_queryable": 1,
+    "public": 0,
+    "publicly_queryable": 0,
     "hierarchical": 0,
     "show_ui": 1,
     "show_in_menu": 1,
@@ -63,12 +63,9 @@
     "show_in_quick_edit": 1,
     "show_admin_column": 1,
     "rewrite": {
-        "permalink_rewrite": "custom_permalink",
-        "slug": "place-taxonomy",
-        "with_front": "1",
-        "rewrite_hierarchical": "0"
+        "permalink_rewrite": "no_permalink"
     },
-    "query_var": "post_type_key",
+    "query_var": "taxonomy_key",
     "query_var_name": "",
     "default_term": {
         "default_term_enabled": "0"
@@ -77,5 +74,5 @@
     "meta_box": "default",
     "meta_box_cb": "",
     "meta_box_sanitize_cb": "",
-    "modified": 1702374676
+    "modified": 1706722500
 }
