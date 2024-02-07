@@ -27,14 +27,9 @@ if(function_exists('get_field')):
     
 $description = get_field( $type, 'option' );
 
-    if($description):
+    if($description && !is_author()):
         
-     echo '<div class="' . $className . '"><p>' . $description . '
-     
-</p>
-
-<hr>
-     </div>';
+     echo '<p ' . get_block_wrapper_attributes() . '>' . $description . '</p>';
         
     endif;
     

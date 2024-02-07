@@ -1,0 +1,7 @@
+.wp-block-blockhaus-post-meta {
+  display: flex;
+  align-items: center;
+  row-gap: var(--wp--preset--spacing--5);
+  column-gap: var(--wp--preset--spacing--20);
+  flex-wrap: wrap;
+}

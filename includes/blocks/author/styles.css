@@ -1,4 +1,4 @@
-.blockhaus-author {
+.wp-block-blockhaus-author {
   font-size: var(--wp--preset--font-size--small);
   text-transform: capitalize;
   display: flex;
@@ -7,7 +7,7 @@
   line-height: 1.5;
 }
 
-a.blockhaus-author > svg {
+a.wp-block-blockhaus-author > svg {
   display: flex;
   align-items: center;
 }

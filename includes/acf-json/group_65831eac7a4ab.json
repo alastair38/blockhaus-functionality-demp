@@ -23,6 +23,26 @@
             "new_lines": ""
         },
         {
+            "key": "field_65c37c15a57fb",
+            "label": "English",
+            "name": "post",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_65831eac8996b",
             "label": "French",
             "name": "blog-fr",
@@ -61,5 +81,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1703091945
+    "modified": 1707310122
 }

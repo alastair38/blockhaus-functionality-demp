@@ -88,6 +88,7 @@ function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/files/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/funders/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/post-meta/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/type/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/versions/block.json' );
 }
@@ -413,8 +414,13 @@ function blockhaus_locale_date_formatter($post_id) {
 	switch_to_locale( 'fr_FR' );
   $locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
 	
+	elseif($type === 'resources' || $type === 'post'):
+	
+	switch_to_locale( 'en_GB' );
+	$locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+	
 	else:
-		
+	
 	$locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
 
 	endif;
@@ -428,13 +434,15 @@ function blockhaus_locale_date_formatter($post_id) {
 	// 		'd MMMM yyyy'
 	// );
 	
-	if($locale_date):
+	if($locale_date && !(is_post_type_archive(['place', 'place-de', 'place-fr']) || is_singular(['place', 'place-de', 'place-fr']))):
 
 	return '<time class="translated-date" datetime="' . get_the_time('c') . '"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>' . $locale_date . '</time>';
 	
-	else:
+	elseif(is_admin()):
 		
 	return '<small>Localized Post Date</small>';
+	
+	else:
 	
 	endif;
 	

@@ -81,7 +81,8 @@
                 "id": ""
             },
             "post_type": [
-                "place-fr"
+                "place-fr",
+                "place-de"
             ],
             "post_status": "",
             "taxonomy": "",
@@ -108,5 +109,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1702399624
+    "modified": 1707314304
 }
