@@ -12,8 +12,10 @@ div.language-versions {
 
 .archive div.language-versions {
   background: whitesmoke;
-  padding: 0.5rem;
-  border-radius: 6px;
+  padding: var(--wp--preset--spacing--5);
+  width: calc(100% - (2 * var(--wp--preset--spacing--5)));
+  border-radius: var(--wp--preset--spacing--5);
+  margin-top: auto;
 }
 
 ul.language-versions {

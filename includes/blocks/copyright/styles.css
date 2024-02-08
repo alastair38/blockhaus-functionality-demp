@@ -1,0 +1,8 @@
+.wp-block-blockhaus-copyright {
+  display: flex;
+  font-size: var(--wp--preset--font-size--small);
+  justify-content: center;
+  align-items: center;
+  gap: var(--wp--preset--spacing--5);
+  margin-top: var(--wp--preset--spacing--50);
+}
