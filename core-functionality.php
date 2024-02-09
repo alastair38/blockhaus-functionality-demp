@@ -289,39 +289,43 @@ add_action( 'wp_head', 'blockhaus_metatags',2);
 
 function setLangAttr() {
 	
-	if ( is_singular('resources-de') || is_singular('blog-de') || is_singular('place-de') || is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
+	if(!is_admin()):
 	
-	 switch_to_locale('de_DE');
-   return 'lang="de"';
+		if ( is_singular('resources-de') || is_singular('blog-de') || is_singular('place-de') || is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
+		
+		switch_to_locale('de_DE');
+		return 'lang="de"';
 
-	elseif ( is_singular('resources-fr') || is_singular('blog-fr') || is_singular('place-fr') || is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') || is_post_type_archive('place-fr') ):
+		elseif ( is_singular('resources-fr') || is_singular('blog-fr') || is_singular('place-fr') || is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') || is_post_type_archive('place-fr') ):
+			
+			switch_to_locale('fr_FR');
+			return 'lang="fr"';
 		
-		switch_to_locale('fr_FR');
-		return 'lang="fr"';
-	
-	elseif ( is_page()  ):
+		elseif ( is_page()  ):
+			
+			$lang = get_the_terms( get_the_ID(), 'language' );
+			
+			if ($lang):
+			
+			$locale = $lang[0]->slug . '_' . strtoupper($lang[0]->slug); 
+			/* open graph tags in lang */
+			switch_to_locale($locale);
+			return 'lang="' . $lang[0]->slug . '"';
 		
-		$lang = get_the_terms( get_the_ID(), 'language' );
-		
-		if ($lang):
-		
-		$locale = $lang[0]->slug . '_' . strtoupper($lang[0]->slug); 
-		/* open graph tags in lang */
-		switch_to_locale($locale);
-		return 'lang="' . $lang[0]->slug . '"';
-  
+			endif;
+			
+		elseif ( is_singular('post') || is_singular('resources') || is_post_type_archive('resources') || is_post_type_archive('post') ):
+			
+			switch_to_locale('en_GB');
+			return 'lang="en"';
+			
+		else: 
+			
+			switch_to_locale('en_GB');
+			return 'lang="en"';
+			
 		endif;
-		
-	elseif ( is_singular('post') || is_singular('resources') || is_post_type_archive('resources') || is_post_type_archive('post') ):
-		
-		switch_to_locale('en_GB');
-		return 'lang="en"';
-		
-	else: 
-		
-		switch_to_locale('en_GB');
-		return 'lang="en"';
-		
+	
 	endif;
 	
 }   
