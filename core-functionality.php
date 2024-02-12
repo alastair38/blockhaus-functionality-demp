@@ -124,7 +124,7 @@ function blockhaus_metatags() {
 	/* default values for metatag properties */
 	
 	$author_name = '';
-	$img = get_template_directory_uri() . '/assets/images/social/og.jpg';
+	$img = get_template_directory_uri() . '/assets/images/social/og.webp';
 	$type = 'website';
 	$permalink = get_the_permalink();
 	
@@ -137,6 +137,10 @@ function blockhaus_metatags() {
 				if($img):
 				
 					$img = $img['sizes']['social-media'];
+				
+				else: 
+					
+					$img = get_template_directory_uri() . '/assets/images/social/og.webp';
 					
 				endif;
 				
@@ -254,11 +258,14 @@ function blockhaus_metatags() {
 			
 			$title = get_bloginfo('title') . ' search results for keyword ' . get_search_query();
 			$excerpt = get_bloginfo('description');
+			$locale = 'en';
+			
 
 		else:
 
 			$title = get_bloginfo('title');
 			$excerpt = get_bloginfo('description');
+			$locale = 'en';	
 
 		endif;?>
 	
@@ -409,24 +416,38 @@ function blockhaus_locale_date_formatter($post_id) {
 	
 	$type = get_post_type($post_id);
 	
-	if($type === 'resources-de' || $type === 'blog-de' || $type === 'place-de'):
+	if($type === 'resources-de' || $type === 'blog-de'):
 	
 	switch_to_locale( 'de_DE' );
   $locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+	switch_to_locale( 'en_GB' );
 		
-	elseif($type === 'resources-fr' || $type === 'blog-fr' || $type === 'place-fr'):
+	elseif($type === 'resources-fr' || $type === 'blog-fr'):
 	
 	switch_to_locale( 'fr_FR' );
   $locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+	switch_to_locale( 'en_GB' );
+	
+	elseif($type === 'place-fr'):
+	
+	switch_to_locale( 'fr_FR' );
+	$locale_date = null; 
+	switch_to_locale( 'en_GB' );
+	
+	elseif($type === 'place-de'):
+	
+	switch_to_locale( 'de_DE' );
+	$locale_date = null; 
+	switch_to_locale( 'en_GB' );
 	
 	elseif($type === 'resources' || $type === 'post'):
 	
 	switch_to_locale( 'en_GB' );
 	$locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
-	
+		
 	else:
-	
-	$locale_date = wp_date( get_option( 'date_format' ), get_post_timestamp($post_id) ); 
+		
+	$locale_date = null; 
 
 	endif;
 

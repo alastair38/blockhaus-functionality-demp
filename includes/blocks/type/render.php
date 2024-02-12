@@ -25,7 +25,7 @@ if( !empty($block['className']) ) {
 $type = get_post_type($post_id );
 $typeObj = get_post_type_object($type);
 
-if(!is_admin() && $typeObj && ($typeObj->name !== "page")):
+if(!is_admin() && $typeObj && !is_singular('page')):
 
 echo '<p class="' . $className . '">' . $typeObj->labels->singular_name . '</p>';
 
