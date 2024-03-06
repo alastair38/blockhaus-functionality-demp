@@ -1,0 +1,67 @@
+ul.wp-block-blockhaus-places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5em;
+  list-style: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  max-width: 100%;
+  padding: 0;
+}
+
+.wp-block-blockhaus-places-grid figure {
+  height: 6rem;
+  aspect-ratio: 16 / 9;
+}
+
+.wp-block-blockhaus-places-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wp-block-blockhaus-places-grid li {
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-block-blockhaus-places-grid li {
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  transition: 200ms;
+  background-color: var(--wp--preset--color--base-2);
+  padding: var(--wp--preset--spacing--20);
+  border-radius: var(--wp--preset--spacing--5);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  overflow: hidden;
+}
+
+.wp-block-blockhaus-places-grid a {
+  background-color: var(--wp--preset--color--contrast);
+  border-radius: var(--wp--preset--spacing--5);
+  border-color: var(--wp--preset--color--contrast);
+  border-width: 0;
+  width: fit-content;
+  color: var(--wp--preset--color--base);
+  font-family: inherit;
+  font-size: var(--wp--preset--font-size--small);
+  font-style: normal;
+  font-weight: 500;
+  line-height: inherit;
+  padding-top: 0.6em;
+  padding-right: 1em;
+  padding-bottom: 0.6em;
+  padding-left: 1em;
+  text-decoration: none;
+  margin-top: var(--wp--preset--spacing--20);
+}
+
+.wp-block-blockhaus-places-grid li h3 {
+  font-size: var(--wp--preset--font-size--medium);
+  margin: 0;
+}
+
+.wp-block-blockhaus-places-grid a:hover,
+.wp-block-blockhaus-places-grid a:focus-visible {
+  outline: 2px solid currentColor;
+}

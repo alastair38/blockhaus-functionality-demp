@@ -1,0 +1,31 @@
+{
+  "name": "blockhaus/places-grid",
+  "title": "Places CPT Grid",
+  "description": "Displays places custom post type in a grid",
+  "style": ["file:./styles.css"],
+  "script": "",
+
+  "icon": "location",
+  "apiVersion": 2,
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php"
+  },
+  "styles": [],
+  "supports": {
+    "align": false,
+    "anchor": false,
+    "alignContent": false,
+    "customClassName": false,
+    "color": {
+      "text": false,
+      "background": false,
+      "link": false
+    },
+    "alignText": false,
+    "fullHeight": false,
+    "inserter": true
+  },
+  "attributes": {}
+}
