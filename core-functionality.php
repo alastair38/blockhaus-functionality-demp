@@ -86,6 +86,7 @@ function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/comment-number/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/copyright/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/date/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/down-arrow/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/files/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/funders/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places/block.json' );
