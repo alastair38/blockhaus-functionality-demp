@@ -1,0 +1,30 @@
+.is-style-button.wp-block-blockhaus-lost-password {
+  /* background-color: var(--wp--preset--color--contrast);
+  border-radius: var(--wp--preset--spacing--5);
+  border-color: var(--wp--preset--color--contrast);
+  border-width: 0; */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+  /* color: var(--wp--preset--color--base); */
+  font-family: inherit;
+  /* font-size: var(--wp--preset--font-size--small); */
+  font-style: normal;
+  font-weight: 500;
+  line-height: inherit;
+  /* padding-block: 0.6em;
+  padding-inline: 1em; */
+  /* text-decoration: none; */
+}
+
+.is-style-button.wp-block-blockhaus-lost-password:hover,
+.is-style-button.wp-block-blockhaus-lost-password:focus-visible {
+  text-decoration: none;
+}
+
+.is-style-button.wp-block-blockhaus-lost-password:focus-visible {
+  outline: 2px solid var(--wp--preset--color--contrast);
+  outline-offset: 4px;
+}
