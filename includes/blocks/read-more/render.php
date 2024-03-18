@@ -16,9 +16,9 @@
 
 $readMore = 'Read more';
 
-if(is_singular('blog-de') || is_singular('place-de') || get_post_type($post_id) === 'blog-de' || get_post_type($post_id) === 'place-de'):
+if(is_singular('blog-de') || is_singular('place-de') || is_singular('resources-de') || get_post_type($post_id) === 'blog-de' || get_post_type($post_id) === 'place-de' || get_post_type($post_id) === 'resources-de'):
   $readMore = 'Mehr lesen';
-elseif(is_singular('blog-fr') || is_singular('place-fr') || get_post_type($post_id) === 'blog-fr' || get_post_type($post_id) === 'place-fr'):
+elseif(is_singular('blog-fr') || is_singular('place-fr') || is_singular('resources-fr') || get_post_type($post_id) === 'blog-fr' || get_post_type($post_id) === 'place-fr' || get_post_type($post_id) === 'resources-fr'):
   $readMore = 'En savoir plus';
 else:
   $readMore = 'Read more';
