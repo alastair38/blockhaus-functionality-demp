@@ -6,19 +6,25 @@ ul.funders {
   justify-content: center;
   list-style-type: none;
   margin: 0 auto;
+  padding: 0 5%;
   gap: 1.5rem;
 }
 
 .funders li {
   justify-self: center;
+  display: flex;
 }
 
 .funders li a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   text-decoration: none;
 }
 
 .funders li img {
   object-fit: contain;
+}
+
+.funders li:first-of-type img {
+  height: 60%;
 }

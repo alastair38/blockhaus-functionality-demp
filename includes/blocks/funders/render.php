@@ -39,14 +39,18 @@ if( have_rows('funders', 'option') ):?>
         // Load sub field value.
         $name = get_sub_field('name');
         $website = get_sub_field('website');
-        $logo = get_sub_field('logo');?>
+        $logo = get_sub_field('logo');
+        
+        
+        
+        ?>
        
             <li>
                 <a aria-label="<?php esc_html_e( $name . ' website', 'core-functionality' );?>" href="<?php echo esc_url($website);?>">
                 <?php 
                  //   var_dump($logo);
                     if( !empty( $logo ) ): ?>
-                        <img height="50" width="100" src="<?php echo esc_url($logo['sizes']['medium']); ?>" alt="<?php esc_html_e( $name . ' logo', 'core-functionality' );?>" />
+                        <img height="100" width="100%" src="<?php echo esc_url($logo['url']); ?>" alt="<?php esc_html_e( $name . ' logo', 'core-functionality' );?>" />
                     <?php endif; ?>
                 </a>
             </li>
