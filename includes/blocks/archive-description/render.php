@@ -21,11 +21,12 @@ if( !empty($block['className']) ) {
     $className .= ' ' . $block['className'];
 }
 
-$type = get_post_type($post_id);
+
+$type = get_queried_object();
 
 if(function_exists('get_field')):
     
-$description = get_field( $type, 'option' );
+$description = get_field( $type->name, 'option' );
 
     if($description && !is_author()):
         
