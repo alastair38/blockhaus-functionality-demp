@@ -90,6 +90,7 @@ function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/files/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/funders/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/lost-password/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/no-results/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places-grid/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/post-meta/block.json' );
