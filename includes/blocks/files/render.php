@@ -65,7 +65,7 @@ if( have_rows('documents', $post_id) ):
         // Load sub field value.
         $doc = get_sub_field('document');
        // var_dump($doc);
-        
+        if(!empty($doc)):
         ?>
        
             <li>
@@ -76,7 +76,7 @@ if( have_rows('documents', $post_id) ):
             </li>
        
 
-  <?php  // End loop.
+  <?php  endif; // End loop.
     endwhile;?>
  </ul>
 
