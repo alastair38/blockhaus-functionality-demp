@@ -37,15 +37,15 @@ if(function_exists('get_field')):
     
     <?php if($locale === 'de_DE'):
     
-        echo 'Sprache';
+        echo 'Sprachen';
         
      elseif($locale === 'fr_FR'):
         
-        echo 'Langue';
+        echo 'Langues';
         
      else:
         
-        echo 'Language';
+        echo 'Languages';
         
      endif;?>
     </span>
@@ -53,6 +53,8 @@ if(function_exists('get_field')):
     <?php foreach($versions as $version):
     // get the assigned language, if any, to check if content is not from a lingual resource post type
       $lang = get_the_terms( $version->ID, 'language' );  
+      
+      if($version->post_status === 'publish'):
  
     ?>
      
@@ -88,7 +90,7 @@ if(function_exists('get_field')):
         
         </a></li>
         
-    <?php endforeach;?> 
+    <?php endif; endforeach;?> 
 
     </ul>
     </div>
