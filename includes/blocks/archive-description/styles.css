@@ -1,4 +1,5 @@
 .wp-block-blockhaus-archive-description {
   text-wrap: balance;
   text-align: center;
+  font-size: var(--wp--preset--font-size--medium);
 }
