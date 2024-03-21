@@ -15,18 +15,20 @@ if( !empty($block['anchor']) ) {
     $id = $block['anchor'];
 }
 
-// Create class attribute allowing for custom "className" and "align" values.
-$className = 'blockhaus-archive-description';
-if( !empty($block['className']) ) {
-    $className .= ' ' . $block['className'];
-}
+if(!is_home()):
+    
+$queried = get_queried_object();
+$postType = $queried->name;
 
+else:
+    
+$postType = 'post';
 
-$type = get_queried_object();
+endif;
 
 if(function_exists('get_field')):
     
-$description = get_field( $type->name, 'option' );
+$description = get_field( $postType, 'option' );
 
     if($description && !is_author()):
         
@@ -35,7 +37,9 @@ $description = get_field( $type->name, 'option' );
     endif;
     
     if(is_admin() && empty($description) ):
+        
         echo '<p>Set the description for custom post type archives on the site settings page.</p>';
+        
     endif;
     
 endif;
