@@ -1,0 +1,32 @@
+{
+  "name": "blockhaus/scroll-top",
+  "title": "Scroll to top button + progress bar",
+  "description": "Displays a scroll to top button + progress bar",
+  "style": ["file:./styles.css"],
+  "script": "file:./scroll-top.js",
+
+  "icon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19V5M5 12l7-7 7 7' /></svg>",
+  "apiVersion": 2,
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php"
+  },
+  "styles": [],
+  "supports": {
+    "align": true,
+    "anchor": false,
+    "alignContent": false,
+    "customClassName": true,
+    "mode": false,
+    "color": {
+      "text": true,
+      "background": false,
+      "link": false
+    },
+    "alignText": false,
+    "fullHeight": false,
+    "inserter": true
+  },
+  "attributes": {}
+}
