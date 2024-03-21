@@ -1,0 +1,5 @@
+.wp-block-query-no-results {
+  text-align: center;
+  font-size: var(--wp--preset--font-size--medium);
+  font-weight: 900;
+}
