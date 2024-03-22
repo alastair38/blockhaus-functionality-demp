@@ -160,6 +160,7 @@ function blockhaus_metatags() {
 			$type = 'article';
 			$author_id = $post->post_author;get_the_author_meta( 'nicename', $post->ID );
 			$author_name = get_the_author_meta( 'nicename', $author_id );
+			
 
 			if(has_post_thumbnail($post->ID)) {
 				
@@ -324,6 +325,11 @@ function setLangAttr() {
 			/* open graph tags in lang */
 			switch_to_locale($locale);
 			return 'lang="' . $lang[0]->slug . '"';
+			
+			else:
+				
+			switch_to_locale('en_GB');
+			return 'lang="en"';
 		
 			endif;
 			
