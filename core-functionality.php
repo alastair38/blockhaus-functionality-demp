@@ -222,16 +222,12 @@ function blockhaus_metatags() {
 		/* set the $title, $excerpt, $locale and $permalink values for archive pages. $type and $img will use the global defaults */
 
 		elseif(is_archive() && ! is_search()):
-			
-			echo 'This is an archive';
 
 			$queried_object = get_queried_object();
 			$postType = '';
 			
-    
 			$postType = $queried_object->name;
 				
-			
 			$permalink = get_post_type_archive_link($queried_object->name);
 			
 			if(function_exists('get_field')):
