@@ -133,6 +133,7 @@ function blockhaus_metatags() {
 	$img = get_template_directory_uri() . '/assets/images/social/og.webp';
 	$type = 'website';
 	$permalink = get_the_permalink();
+	$excerpt = get_bloginfo('description');
 	
 		/* get social_image if it has been added. This will override the social image supplied with the theme */
 	
@@ -152,6 +153,7 @@ function blockhaus_metatags() {
 				
 		endif;
 		
+		
 		/* set the $title, $type, $img, $locale and $excerpt values for single content items */
 		
 		if(is_page() || is_singular()):
@@ -161,6 +163,20 @@ function blockhaus_metatags() {
 			$author_id = $post->post_author;get_the_author_meta( 'nicename', $post->ID );
 			$author_name = get_the_author_meta( 'nicename', $author_id );
 			
+			if(has_excerpt()) {
+				/* check is content has an excerpt and strip out tags etc */
+				$excerpt = strip_tags($post->post_excerpt);
+				$excerpt = str_replace("", "'", $excerpt);
+			
+			} else {
+				
+				/* if content does not have an excerpt, generate one from the post_content itself. This will avoid non English items from having the default site description (in English) used */
+				$excerpt = strip_tags($post->post_content);
+				$excerpt = str_replace( array("\n", "\'", "\"", "\r", "\t"), ' ', $excerpt );
+				$excerpt = mb_substr( $excerpt, 0, 170, 'utf8' );
+				$excerpt = normalize_whitespace($excerpt);
+			
+			}
 
 			if(has_post_thumbnail($post->ID)) {
 				
@@ -193,39 +209,44 @@ function blockhaus_metatags() {
 				endif;
 			
 			endif;
-
-			if(has_excerpt()) {
-				/* check is content has an excerpt and strip out tags etc */
-				$excerpt = strip_tags($post->post_excerpt);
-				$excerpt = str_replace("", "'", $excerpt);
 			
-			} else {
-				
-				/* if content does not have an excerpt, generate one from the post_content itself. This will avoid non English items from having the default site description (in English) used */
-				$excerpt = strip_tags($post->post_content);
-				$excerpt = str_replace( array("\n", "\'", "\"", "\r", "\t"), ' ', $excerpt );
-				$excerpt = mb_substr( $excerpt, 0, 170, 'utf8' );
-				$excerpt = normalize_whitespace($excerpt);
+		elseif(is_home()):
 			
-			}
+			$title = single_post_title('',false);
+			// $excerpt = get_bloginfo('description');
+			$locale = 'en';
 			
+			if(function_exists('get_field')):
+				$excerpt = get_field( 'post', 'option' );
+			endif;
 		/* set the $title, $excerpt, $locale and $permalink values for archive pages. $type and $img will use the global defaults */
 
 		elseif(is_archive() && ! is_search()):
+			
+			echo 'This is an archive';
 
 			$queried_object = get_queried_object();
-			//var_dump($queried_object);
+			$postType = '';
+			
+    
+			$postType = $queried_object->name;
+				
+			
 			$permalink = get_post_type_archive_link($queried_object->name);
+			
+			if(function_exists('get_field')):
+				$excerpt = get_field( $postType, 'option' );
+			endif;
 			
 			if ( is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
 				
 				$title = get_the_archive_title();
 				
-				if(function_exists('get_field')):
+				// if(function_exists('get_field')):
 			
-					$excerpt = get_field('german_site_description', 'option');
+				// 	$excerpt = get_field('german_site_description', 'option');
 	
-				endif;
+				// endif;
 				
 				//we don't use get_locale() here as even though the setLangAttr function is setting this correctly, WP uses a different format from HTML for its codes eg: en_GB rather than en-GB
 				
@@ -235,24 +256,18 @@ function blockhaus_metatags() {
 				
 				$title = post_type_archive_title( '', false );
 				
-				if(function_exists('get_field')):
+				// if(function_exists('get_field')):
 			
-					$excerpt = get_field('french_site_description', 'option');
+				// 	$excerpt = get_field('french_site_description', 'option');
 	
-				endif;
+				// endif;
 				
 				$locale = 'fr';
-			
-			elseif ( is_post_type_archive('post' )):
-				
-				$title = single_post_title('',false);
-				$excerpt = get_bloginfo('description');
-				$locale = 'en';
-				
+
 			else: 
 				
 				$title = post_type_archive_title( '', false );
-				$excerpt = get_bloginfo('description');
+				// $excerpt = get_bloginfo('description');
 				$locale = 'en';
 					
 			endif;
@@ -264,14 +279,14 @@ function blockhaus_metatags() {
 			//check this out on language pages
 			
 			$title = get_bloginfo('title') . ' search results for keyword ' . get_search_query();
-			$excerpt = get_bloginfo('description');
+			// $excerpt = get_bloginfo('description');
 			$locale = 'en';
 			
 
 		else:
 
 			$title = get_bloginfo('title');
-			$excerpt = get_bloginfo('description');
+			// $excerpt = get_bloginfo('description');
 			$locale = 'en';	
 
 		endif;?>
@@ -280,7 +295,7 @@ function blockhaus_metatags() {
 		<?php if($author_name):?>
 		<meta name="author" content="<?php echo $author_name;?>" />
 		<?php endif;?>
-		<meta name="description" content="<?php echo strip_tags($excerpt); ?>"/>
+		<meta name="description" content="<?php echo strip_tags(mb_substr( $excerpt, 0, 170, 'utf8' )); ?>"/>
 		<meta property="og:locale" content="<?php echo $locale;?>">
 		<meta property="og:title" content="<?php echo strip_tags($title); ?>"/>
     <meta property="og:description" content="<?php echo strip_tags($excerpt); ?>"/>
