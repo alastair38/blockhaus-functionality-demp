@@ -802,6 +802,22 @@ add_action( "manage_resources-fr_posts_custom_column", function ( $column_name, 
 	
 }, 10, 2 );
 
+function blockhaus_modify_archive_order( $query ) {
+
+  // Check we're on the frontend and modifying the main query.
+  if ( ! is_admin() && $query->is_main_query() ) {
+
+      // Change to order to A-Z.
+      if ( $query->is_post_type_archive('place') ) {
+        $query->set( 'order', 'ASC' );
+        $query->set( 'orderby', 'title' );
+      }  
+
+  } 
+}
+
+add_action( 'pre_get_posts', 'blockhaus_modify_archive_order' );
+
 function order_archive_by_post_type ( $query ) {
 	if ( ! is_admin() && $query->is_main_query() ) {
 		// Not a query for an admin page.
