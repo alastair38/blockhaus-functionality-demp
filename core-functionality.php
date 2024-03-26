@@ -123,192 +123,103 @@ function blockhaus_change_post_object() {
         $labels->name_admin_bar = 'Articles';
 }
 
-function blockhaus_metatags() {
+function blockhaus_seo() {
 	
 	global $post;
-		
-	/* default values for metatag properties */
 	
+	// set default values
+	$title = get_bloginfo('title');
 	$author_name = '';
-	$img = get_template_directory_uri() . '/assets/images/social/og.webp';
+	$img = get_template_directory_uri() . '/assets/images/social/og.jpg';
+	$img_alt = 'Two older women and an older man walking arm in arm';
 	$type = 'website';
 	$permalink = get_the_permalink();
-	$excerpt = get_bloginfo('description');
+	$excerpt = get_bloginfo( 'description' );
+	$queried_object = get_queried_object();
 	
-		/* get social_image if it has been added. This will override the social image supplied with the theme */
-	
+	// get html language attr - returns lang="lang_code". We then remove the " with str_replace so we can then use substr and strpos to get the code after the =
+	$langAttr = get_language_attributes( );
+	$locale = str_replace('"', '', $langAttr);
+	$locale = substr($locale, strpos($locale, "=") + 1);
+			
+	if(is_singular()):
+		// set title etc for single pages / cpts
+		$title = get_the_title();
+		$type = 'article';
+		$author_id = $post->post_author;
+		$author_name = get_the_author_meta( 'nicename', $author_id );
+		
+		if(has_post_thumbnail($post->ID)) {
+			// set social img to post_thumbnail, if it exists
+			$img_src = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'full');
+			$img_alt = get_post_meta(get_post_thumbnail_id( $post->ID ), '_wp_attachment_image_alt', true);
+			$img = $img_src[0];	
+		}
+		
+		if(has_excerpt()) {
+			/* check is content has an excerpt and strip out tags etc */
+			$excerpt = strip_tags($post->post_excerpt);
+			$excerpt = str_replace("", "'", $excerpt);
+		
+		} else {
+			
+			/* if content does not have an excerpt, generate one from the post_content itself. This will avoid non English items from having the default site description (in English) used */
+			$excerpt = strip_tags($post->post_content);
+			$excerpt = str_replace( array("\n", "\'", "\"", "\r", "\t"), ' ', $excerpt );
+			$excerpt = mb_substr( $excerpt, 0, 170, 'utf8' );
+			$excerpt = normalize_whitespace($excerpt);
+		}	
+		
+	elseif(is_post_type_archive()):
+		// set title, get postType and permalink for post type archives from queried_object - use this as get_post_type only works if there is archive content
+		$title = post_type_archive_title( '', false );
+		$postType = $queried_object->name;
+		$permalink = get_post_type_archive_link($queried_object->name);
+		
 		if(function_exists('get_field')):
-			
-			$img = get_field('social_image', 'option');
-			
-				if($img):
-				
-					$img = $img['sizes']['social-media'];
-				
-				else: 
-					
-					$img = get_template_directory_uri() . '/assets/images/social/og.webp';
-					
-				endif;
-				
+			$excerpt = get_field( $postType, 'option' );
 		endif;
 		
+	elseif(is_home()):
+		// set title and get permalink for blog page
+		$title = single_post_title('',false);
+		$permalink = get_post_type_archive_link('post');
 		
-		/* set the $title, $type, $img, $locale and $excerpt values for single content items */
+		if(function_exists('get_field')):
+			$excerpt = get_field( 'post', 'option' );
+		endif;
 		
-		if(is_page() || is_singular()):
-			
-			$title = get_the_title();
-			$type = 'article';
-			$author_id = $post->post_author;get_the_author_meta( 'nicename', $post->ID );
-			$author_name = get_the_author_meta( 'nicename', $author_id );
-			
-			if(has_excerpt()) {
-				/* check is content has an excerpt and strip out tags etc */
-				$excerpt = strip_tags($post->post_excerpt);
-				$excerpt = str_replace("", "'", $excerpt);
-			
-			} else {
-				
-				/* if content does not have an excerpt, generate one from the post_content itself. This will avoid non English items from having the default site description (in English) used */
-				$excerpt = strip_tags($post->post_content);
-				$excerpt = str_replace( array("\n", "\'", "\"", "\r", "\t"), ' ', $excerpt );
-				$excerpt = mb_substr( $excerpt, 0, 170, 'utf8' );
-				$excerpt = normalize_whitespace($excerpt);
-			
-			}
-
-			if(has_post_thumbnail($post->ID)) {
-				
-			$img_src = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'full');
-			$img = $img_src[0];
-			
-			}
-			
-			if ( is_singular('resources-de') || is_singular('blog-de') || is_singular('place-de')):
+	elseif(is_search()):
+		// set title and get permalink for search page
+		$title = 'Search results for keyword ' . get_search_query();
+		$permalink = get_search_link();
 		
-				$locale = 'de';
-	
-	
-			elseif ( is_singular('resources-fr') || is_singular('blog-fr') || is_singular('place-fr')):
-				
-				$locale = 'fr';
-				
-			else: 
-				
-				$lang = get_the_terms( get_the_ID(), 'language' );
-				
-				if ($lang):
-				
-					$locale = $lang[0]->slug;
-					
-				else:
-					
-					$locale = 'en';
-					
-				endif;
-			
-			endif;
-			
-		elseif(is_home()):
-			
-			$title = single_post_title('',false);
-			// $excerpt = get_bloginfo('description');
-			$locale = 'en';
-			
-			if(function_exists('get_field')):
-				$excerpt = get_field( 'post', 'option' );
-			endif;
-		/* set the $title, $excerpt, $locale and $permalink values for archive pages. $type and $img will use the global defaults */
+	endif;
 
-		elseif(is_archive() && ! is_search()):
+// only set the author meta tag if an author exists
+if(!empty($author_name)):?>
+<meta name="author" content="<?php echo $author_name;?>" />
+<?php endif;?>
 
-			$queried_object = get_queried_object();
-			$postType = '';
+<meta name="description" content="<?php echo strip_tags(mb_substr( $excerpt, 0, 170, 'utf8' )); ?>"/>
+<meta property="og:locale" content="<?php echo $locale;?>">
+<meta property="og:title" content="<?php echo strip_tags($title); ?>"/>
+<meta property="og:description" content="<?php echo strip_tags($excerpt); ?>"/>
+<meta property="og:type" content="<?php echo $type; ?>"/>
+<meta property="og:url" content="<?php echo esc_url($permalink); ?>"/>
+<meta property="og:site_name" content="<?php echo strip_tags(get_bloginfo()); ?>"/>
+<meta property="og:image" content="<?php echo $img; ?>"/>
+<meta property="og:image:alt" content="<?php echo $img_alt; ?>" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="<?php echo esc_url($permalink); ?>" />
+<meta name="twitter:title" content="<?php echo strip_tags($title); ?>" />
+<meta name="twitter:description" content="<?php echo strip_tags($excerpt); ?>" />
+<meta name="twitter:image" content="<?php echo $img; ?>" />
+<meta name="twitter:image:alt" content="<?php echo $img_alt; ?>" />
 			
-			$postType = $queried_object->name;
-				
-			$permalink = get_post_type_archive_link($queried_object->name);
-			
-			if(function_exists('get_field')):
-				$excerpt = get_field( $postType, 'option' );
-			endif;
-			
-			if ( is_post_type_archive('blog-de') || is_post_type_archive('resources-de') || is_post_type_archive('place-de') ):
-				
-				$title = get_the_archive_title();
-				
-				// if(function_exists('get_field')):
-			
-				// 	$excerpt = get_field('german_site_description', 'option');
-	
-				// endif;
-				
-				//we don't use get_locale() here as even though the setLangAttr function is setting this correctly, WP uses a different format from HTML for its codes eg: en_GB rather than en-GB
-				
-				$locale = 'de';
-	
-			elseif ( is_post_type_archive('blog-fr') || is_post_type_archive('resources-fr') || is_post_type_archive('place-fr') ):
-				
-				$title = post_type_archive_title( '', false );
-				
-				// if(function_exists('get_field')):
-			
-				// 	$excerpt = get_field('french_site_description', 'option');
-	
-				// endif;
-				
-				$locale = 'fr';
-
-			else: 
-				
-				$title = post_type_archive_title( '', false );
-				// $excerpt = get_bloginfo('description');
-				$locale = 'en';
-					
-			endif;
-			
-		/* set the $title and $excerptvalues for the search page. $type and $img will use the global defaults */
-
-		elseif(is_search()):
-
-			//check this out on language pages
-			
-			$title = get_bloginfo('title') . ' search results for keyword ' . get_search_query();
-			// $excerpt = get_bloginfo('description');
-			$locale = 'en';
-			
-
-		else:
-
-			$title = get_bloginfo('title');
-			// $excerpt = get_bloginfo('description');
-			$locale = 'en';	
-
-		endif;?>
-	
-	<!-- output metatags -->
-		<?php if($author_name):?>
-		<meta name="author" content="<?php echo $author_name;?>" />
-		<?php endif;?>
-		<meta name="description" content="<?php echo strip_tags(mb_substr( $excerpt, 0, 170, 'utf8' )); ?>"/>
-		<meta property="og:locale" content="<?php echo $locale;?>">
-		<meta property="og:title" content="<?php echo strip_tags($title); ?>"/>
-    <meta property="og:description" content="<?php echo strip_tags($excerpt); ?>"/>
-    <meta property="og:type" content="<?php echo $type; ?>"/>
-    <meta property="og:url" content="<?php echo esc_url($permalink); ?>"/>
-    <meta property="og:site_name" content="<?php echo strip_tags(get_bloginfo()); ?>"/>
-    <meta property="og:image" content="<?php echo $img; ?>"/>
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="<?php echo esc_url($permalink); ?>" />
-    <meta name="twitter:title" content="<?php echo strip_tags($title); ?>" />
-    <meta name="twitter:description" content="<?php echo strip_tags($excerpt); ?>" />
-    <meta name="twitter:image" content="<?php echo $img; ?>" />
-	
-	
 <?php }
 
-add_action( 'wp_head', 'blockhaus_metatags',2);
+add_action( 'wp_head', 'blockhaus_seo',2);
 
 /* This function sets the correct language attribute depending on post types and / or the manually set language taxonomy. We also set the attribute on default language pages as this is recognised as best practice on multilingual sites */
 
