@@ -60,7 +60,7 @@ if(function_exists('get_field')):
      
         <li><a aria-label="<?php echo $version->post_title;?>" href="<?php echo get_the_permalink($version->ID);?>">
      
-        <?php if(($version->post_type === 'resources-fr') || ($lang && $lang[0]->slug === 'fr')):?>
+        <?php if(($version->post_type === 'resources-fr') || ($version->post_type === 'place-fr') || ($version->post_type === 'blog-fr') || ($lang && $lang[0]->slug === 'fr')):?>
             
             <!-- add svg class to place li item in a consistent place within the ul grid this saves having to perform complicated sorting on the $versions array -->
  
@@ -70,7 +70,7 @@ if(function_exists('get_field')):
         
         <?php esc_html_e( 'Français', 'core-functionality' );?>
         
-        <?php elseif(($version->post_type === 'resources-de') || ($lang && $lang[0]->slug === 'de')):?>
+        <?php elseif(($version->post_type === 'resources-de') || ($version->post_type === 'place-de') || ($version->post_type === 'blog-de') || ($lang && $lang[0]->slug === 'de')):?>
 
             <svg class="de" width="30" height="30">
                 <use xlink:href="<?php echo get_template_directory_uri() . '/assets/images/icons/flags.svg#deutsch';?>"></use>

@@ -21,7 +21,12 @@
                 "page",
                 "resources-de",
                 "resources-fr",
-                "resources"
+                "resources",
+                "place",
+                "place-de",
+                "place-fr",
+                "blog-fr",
+                "blog-de"
             ],
             "post_status": "",
             "taxonomy": "",
@@ -43,22 +48,8 @@
         [
             {
                 "param": "post_type",
-                "operator": "==",
-                "value": "resources"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "resources-de"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "resources-fr"
+                "operator": "!=",
+                "value": "discussion"
             }
         ]
     ],
@@ -71,5 +62,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1701256810
+    "modified": 1717160780
 }

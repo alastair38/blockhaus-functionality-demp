@@ -137,7 +137,7 @@ function blockhaus_seo() {
 	$excerpt = get_bloginfo( 'description' );
 	$queried_object = get_queried_object();
 	
-	// get html language attr - returns lang="lang_code". We then remove the " with str_replace so we can then use substr and strpos to get the code after the =
+	// get html language attr > returns lang="lang_code". Remove the " with str_replace so we can then use substr and strpos to get the code after the = . This will work with any lang code.
 	$langAttr = get_language_attributes( );
 	$locale = str_replace('"', '', $langAttr);
 	$locale = substr($locale, strpos($locale, "=") + 1);
@@ -398,7 +398,6 @@ function blockhaus_locale_date_formatter($post_id) {
 	endif;
 	
 }
-
 
 /**
  * Adapted from the following to duplicate resources to French and German resources custom post types
