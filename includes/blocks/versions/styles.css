@@ -5,8 +5,9 @@ div.language-versions span {
 
 div.language-versions {
   display: flex;
-  flex-direction: column;
-  gap: var(--wp--preset--spacing--5);
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--wp--preset--spacing--10);
   font-size: calc(var(--wp--preset--font-size--small) * 0.9);
 }
 
