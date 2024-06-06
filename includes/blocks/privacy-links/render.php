@@ -14,6 +14,8 @@
      $class_name .= ' ' . $block['className'];
  }
  
+ $queriedObjectId = get_queried_object_id(  );
+ 
  if(function_exists('get_field')):
 
   $cookiesSet = get_field('cookies_settings', 'option');
@@ -27,9 +29,12 @@
   endif;
   
   $btnText = 'Cookie Preferences';
+  
+  $lang = get_the_terms( $post_id, 'language' );
+  
+  $lang = $lang ? $lang[0]->slug : '';
 
-
-  if(is_singular('blog-de') || is_singular('place-de') || is_singular('resources-de') || get_post_type($post_id) === 'blog-de' || get_post_type($post_id) === 'place-de' || get_post_type($post_id) === 'resources-de'):
+  if(is_singular('blog-de') || is_singular('place-de') || is_singular('resources-de') || get_post_type($post_id) === 'blog-de' || get_post_type($post_id) === 'place-de' || get_post_type($post_id) === 'resources-de' || $lang === 'de'):
     
     $btnText = 'Cookie-Einstellungen';
     
@@ -41,7 +46,7 @@
       $contact = $privacyPages['contact_page_de'];
     endif;
     
-  elseif(is_singular('blog-fr') || is_singular('place-fr') || is_singular('resources-fr') || get_post_type($post_id) === 'blog-fr' || get_post_type($post_id) === 'place-fr' || get_post_type($post_id) === 'resources-fr'):
+  elseif(is_singular('blog-fr') || is_singular('place-fr') || is_singular('resources-fr') || get_post_type($post_id) === 'blog-fr' || get_post_type($post_id) === 'place-fr' || get_post_type($post_id) === 'resources-fr' || $lang === 'fr'):
     
     $btnText = 'Préférences en matière de cookies';
     
@@ -71,6 +76,7 @@
 ?>
 
 <ul class="wp-block-blockhaus-privacy-links">
+  
   <?php if($cookiesSet):?>
   <li><button type="button" data-cc="show-preferencesModal"><?php echo $btnText;?></button></li>
   <?php endif;?>

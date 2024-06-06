@@ -1,6 +1,6 @@
 {
     "key": "post_type_655dea0390a2b",
-    "title": "Ressources",
+    "title": "Ressourcen",
     "menu_order": 0,
     "active": true,
     "post_type": "resources-de",
@@ -8,9 +8,9 @@
     "import_source": "",
     "import_date": "",
     "labels": {
-        "name": "Ressources",
+        "name": "Ressourcen",
         "singular_name": "Resource DE",
-        "menu_name": "Ressources",
+        "menu_name": "Ressourcen",
         "all_items": "All Resources DE",
         "edit_item": "Edit Resources DE",
         "view_item": "View Resources DE",
@@ -83,5 +83,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1717684661
+    "modified": 1717684888
 }
