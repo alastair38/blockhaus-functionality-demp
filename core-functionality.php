@@ -84,6 +84,7 @@ function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/archive-description/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/author/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/comment-number/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/cookie-consent/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/copyright/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/date/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/down-arrow/block.json' );
@@ -94,12 +95,14 @@ function blockhaus_load_blocks() {
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/places-grid/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/post-meta/block.json' );
+	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/privacy-links/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/read-more/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/scroll-top/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/type/block.json' );
 	register_block_type( plugin_dir_path( __FILE__ ) . '/includes/blocks/versions/block.json' );
 }
 add_action( 'init', 'blockhaus_load_blocks' );
+
 
 /* Update post labels */
 
@@ -398,6 +401,83 @@ function blockhaus_locale_date_formatter($post_id) {
 	endif;
 	
 }
+
+function blockhaus_cookie_scripts() {
+	if(function_exists('get_field')):
+
+		$cookiesSet = get_field('cookies_settings', 'option');
+		
+		// $cookiesSet = $cookies['cookies_set'];
+		
+	
+	
+		$consentPanel = get_field('consent_panel_settings', 'option');
+		if($consentPanel):
+		$privacyPage = $consentPanel['privacy_page'];
+		$contactPage = $consentPanel['contact_page'];
+		$privacyPageDe = $consentPanel['privacy_page_de'];
+		$contactPageDe = $consentPanel['contact_page_de'];
+		$privacyPageFr = $consentPanel['privacy_page_fr'];
+		$contactPageFr = $consentPanel['contact_page_fr'];
+		endif;
+		
+	
+		$analyticsSet = get_field('analytics_settings', 'option');
+		// $analyticsSet = $analytics['analytics_cookies_set'];
+		
+		$embeddedContent = get_field('social_media_settings', 'option');
+	  // $enhancedPrivacy = $social_media['enhanced_privacy'];
+		
+	
+	endif;
+	
+		if($cookiesSet) {
+				wp_enqueue_script( 'cookie-js', 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js', array(), '', true );
+				
+				wp_enqueue_script( 'cookie-init-js', plugin_dir_url( __FILE__ ) . 'includes/js/cookieinit.js', array('cookie-js'), wp_get_theme()->get( 'Version' ), true );
+	
+				wp_enqueue_style( 'cookie-style', 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css', array(), '', 'all' ); 
+				
+				wp_localize_script("cookie-js", "WPVars", array(
+					"contact_page" => $contactPage,
+					"privacy_page" => $privacyPage,
+					"contact_page_de" => $contactPageDe,
+					"privacy_page_de" => $privacyPageDe,
+					"contact_page_fr" => $contactPageFr,
+					"privacy_page_fr" => $privacyPageFr,
+					"analytics" => $analyticsSet,
+					"media" => $embeddedContent,
+				)
+			);
+	
+		}
+		
+			// wp_enqueue_script( 'blockhaus-embedPrivacy', plugin_dir_url( __FILE__ ) . 'includes/js/embedPrivacy.js', array(), wp_get_theme()->get( 'Version' ), true );
+		
+}
+
+add_action( 'wp_enqueue_scripts', 'blockhaus_cookie_scripts' );
+
+
+add_filter('script_loader_tag', 'add_attributes_to_script', 10, 3); 
+function add_attributes_to_script( $tag, $handle, $src ) {
+    if ( 'cookie-init-js' === $handle ) {
+        $tag = '<script type="module" src="' . esc_url( $src ) . '" id="cookie-init-js" ></script>';
+    } 
+	
+    return $tag;
+}
+
+
+// add_filter('script_loader_tag', 'add_attribute_to_script', 10, 3); 
+// function add_attribute_to_script( $tag, $handle, $src ) {
+  
+		
+// 		if ( 'blockhaus-embedPrivacy' === $handle ) {
+// 			$tag = '<script data-category="analytics" data-service="youtube" data-type="module" src="' . esc_url( $src ) . '" id="blockhaus-embedPrivacy" ></script>';
+// 	} 
+//     return $tag;
+// }
 
 /**
  * Adapted from the following to duplicate resources to French and German resources custom post types

@@ -1,0 +1,41 @@
+ul.wp-block-blockhaus-privacy-links {
+  display: flex;
+  width: fit-content;
+  list-style-type: none;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0;
+}
+
+ul.wp-block-blockhaus-privacy-links li {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wp-block-blockhaus-privacy-links a {
+  font-size: var(--wp--preset--font-size--medium);
+}
+
+.wp-block-blockhaus-privacy-links button {
+  font-family: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: var(--wp--preset--font-size--medium);
+  color: var(--wp--preset--color--base-2);
+}
+
+.wp-block-blockhaus-privacy-links button:hover,
+.wp-block-blockhaus-privacy-links button:focus-visible {
+  text-decoration: none;
+}
+
+.wp-block-blockhaus-cookie-consent-btn:hover,
+.wp-block-blockhaus-cookie-consent-btn:focus-visible {
+  outline: 2px solid var(--wp--preset--color--contrast);
+  outline-offset: 2px;
+  color: var(--wp--preset--color--base-2);
+}
