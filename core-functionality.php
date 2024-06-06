@@ -808,11 +808,21 @@ function blockhaus_modify_archive_order( $query ) {
   // Check we're on the frontend and modifying the main query.
   if ( ! is_admin() && $query->is_main_query() ) {
 
-      // Change to order to A-Z.
+      // Change to order to A-Z for place archives.
       if ( $query->is_post_type_archive('place') ) {
         $query->set( 'order', 'ASC' );
         $query->set( 'orderby', 'title' );
-      }  
+      } 
+			
+			if ( $query->is_post_type_archive('place-de') ) {
+        $query->set( 'order', 'ASC' );
+        $query->set( 'orderby', 'title' );
+      } 
+			
+			if ( $query->is_post_type_archive('place-fr') ) {
+        $query->set( 'order', 'ASC' );
+        $query->set( 'orderby', 'title' );
+      } 
 
   } 
 }
