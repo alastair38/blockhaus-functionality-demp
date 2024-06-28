@@ -3,6 +3,46 @@
     "title": "SEO + Branding",
     "fields": [
         {
+            "key": "field_667ebc8aaaa30",
+            "label": "Google Site Verification",
+            "name": "google_site_verification",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_667ebca2aaa31",
+            "label": "Bing Site Verification",
+            "name": "bing_site_verification",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6564a44bd6004",
             "label": "Social sharing image",
             "name": "social_image",
@@ -86,5 +126,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1701099341
+    "modified": 1719581883
 }
