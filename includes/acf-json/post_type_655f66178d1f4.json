@@ -70,10 +70,10 @@
     ],
     "taxonomies": "",
     "has_archive": true,
-    "has_archive_slug": "fr\/blog",
+    "has_archive_slug": "fr\/article",
     "rewrite": {
         "permalink_rewrite": "custom_permalink",
-        "slug": "fr\/blog",
+        "slug": "fr\/article",
         "with_front": "1",
         "feeds": "0",
         "pages": "1"
@@ -84,5 +84,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1709894261
+    "modified": 1719925618
 }
