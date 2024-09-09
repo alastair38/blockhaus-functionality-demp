@@ -1,6 +1,6 @@
 {
     "key": "post_type_65782a560db53",
-    "title": "Platz",
+    "title": "Orte",
     "menu_order": 0,
     "active": true,
     "post_type": "place-de",
@@ -8,13 +8,13 @@
     "import_source": "",
     "import_date": "",
     "labels": {
-        "name": "Platz",
-        "singular_name": "Platz",
-        "menu_name": "Platz",
-        "all_items": "All Platz",
-        "edit_item": "Edit Platz",
-        "view_item": "View Platz",
-        "view_items": "View Platz",
+        "name": "Orte",
+        "singular_name": "Orte",
+        "menu_name": "Orte",
+        "all_items": "All Orte",
+        "edit_item": "Edit Orte",
+        "view_item": "View Orte",
+        "view_items": "View Orte",
         "add_new_item": "Add New Platz",
         "add_new": "",
         "new_item": "New Platz",
@@ -69,10 +69,10 @@
     ],
     "taxonomies": "",
     "has_archive": true,
-    "has_archive_slug": "de\/platz",
+    "has_archive_slug": "de\/orte",
     "rewrite": {
         "permalink_rewrite": "custom_permalink",
-        "slug": "de\/platz",
+        "slug": "de\/orte",
         "with_front": "1",
         "feeds": "1",
         "pages": "1"
@@ -83,5 +83,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1719931624
+    "modified": 1725891169
 }

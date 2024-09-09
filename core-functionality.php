@@ -293,11 +293,11 @@ if ( ! function_exists( 'hreflang_blockhaus' ) ) {
 					$lang = get_the_terms( $version->ID, 'language' );  
 				?>
  
-						<?php if(($version->post_type === 'resources-fr') || ($lang && $lang[0]->slug === 'fr')):?>
+						<?php if(($version->post_type === 'resources-fr') || ($version->post_type === 'place-fr') || ($lang && $lang[0]->slug === 'fr')):?>
 		 
 							<link rel="alternate" href="<?php echo get_the_permalink($version->ID);?>" hreflang="fr">
 						
-						<?php elseif(($version->post_type === 'resources-de') || ($lang && $lang[0]->slug === 'de')):?>
+						<?php elseif(($version->post_type === 'resources-de') || ($version->post_type === 'place-de') || ($lang && $lang[0]->slug === 'de')):?>
 		
 							<link rel="alternate" href="<?php echo get_the_permalink($version->ID);?>" hreflang="de">
 								
